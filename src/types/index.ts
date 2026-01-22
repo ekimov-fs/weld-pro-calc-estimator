@@ -1,4 +1,11 @@
-export type WeldType = 'MMA' | 'MIG' | 'TIG'
+export interface Weld {
+    id: number;
+    name: string;
+    price: number;
+}
+
+
+'MMA' | 'MIG' | 'TIG'
 
 export interface Metal {
     id: number;
@@ -19,5 +26,11 @@ export interface CalculationInput {
 export interface Dimensions{
     length: number;
     width: number;
+    thickness: number;
+    weldLength:number;
+}
+
+export interface Thickness{
+    id: number;
     thickness: number;
 }

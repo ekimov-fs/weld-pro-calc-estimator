@@ -1,4 +1,25 @@
 form{
+
     display: flex;
     flex-direction: column;
+
+    input{
+        margin: 5px 35px;
+    }
+
+    select{
+        margin: 5px 35px;
+    }
+}
+
+.forms{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metSvo, .weld{
+    margin: 10px 0px;
 }
