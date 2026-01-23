@@ -4,9 +4,6 @@ export interface Weld {
     price: number;
 }
 
-
-'MMA' | 'MIG' | 'TIG'
-
 export interface Metal {
     id: number;
     name: string;

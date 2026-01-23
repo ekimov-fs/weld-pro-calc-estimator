@@ -1,98 +1,9 @@
 import { useState } from 'react';
-
 import './App.css'
 import type {  Metal, Dimensions, Weld, Thickness } from './types'
+import {metals, weld, thickness} from './spisok/spisok'
 
-const metals:Metal[] = [
-  {
-    id: 1,
-    name: 'Сталь углеродистая',
-    density: 7850,
-    pricePerKg: 85
-  },
-  {
-    id: 2,
-    name: 'Нержавеющая сталь',
-    density: 7900,
-    pricePerKg: 380
-  },
-  {
-    id: 3,
-    name: 'Алюминий',
-    density: 2700,
-    pricePerKg: 280
-  },
-  {
-    id: 4,
-    name: 'Медь',
-    density: 8960,
-    pricePerKg: 950
-  },
-  {
-    id: 5,
-    name: 'Титан',
-    density: 4540,
-    pricePerKg: 3200
-  },
-  {
-    id: 6,
-    name: 'Чугун',
-    density: 7200,
-    pricePerKg: 75
-  },
-  {
-    id: 7,
-    name: 'Никелевые сплавы',
-    density: 8900,
-    pricePerKg: 2100
-  }
-];
-
-const weld: Weld[] = [
-  {
-    id: 1,
-    name: 'MMA',
-    price: 150
-  },
-  {
-    id: 2,
-    name: 'MIG',
-    price: 250
-  },
-  {
-    id: 3,
-    name: 'TIG',
-    price: 600
-  }
-]
-
-const thickness: Thickness[] = [
-  {
-    id:1,
-    thickness: 0
-  },
-  {
-    id:2,
-    thickness: 1
-  },
-  {
-    id:3,
-    thickness: 2
-  },
-  {
-    id:4,
-    thickness: 3
-  },
-  {
-    id:5,
-    thickness: 4
-  },
-  {
-    id:6,
-    thickness: 5
-  },
-] 
-
+import Select from './components/Select';
 
 function App() {
 
@@ -125,7 +36,6 @@ function App() {
     }
   }
 
-
   const handleDemensions = (e) => {
   const {name, value} = e.target
     setDemensions(prev => ({
@@ -139,11 +49,7 @@ function App() {
 
   const weight = (demensions.length*demensions.width*demensions.thickness*selectedMetal.density)/1000000000;
   const price = weight*(selectedMetal.pricePerKg)
-  let priceWeld;
-  
-  demensions.length ? priceWeld = (demensions.weldLength / 1000)*weldTypes.price : priceWeld = 0;
-
-
+  const priceWeld = demensions.weldLength ? (demensions.weldLength / 1000) * weldTypes.price : 0;
   const itog = priceWeld + price
   
   
@@ -171,12 +77,9 @@ function App() {
           ))}
         </select>
         
-        <select onChange={handleSelectedMetal}>
-          {metals.map((m) => (
-            <option key={m.id} value={m.id}>{m.name}</option>
-          ))}
-          
-        </select>
+        <Select handle={handleDemensions} data={thickness}/>
+
+        <Select handle={handleSelectedMetal} data={metals}/>
 
         <input 
           type="number" 
@@ -185,11 +88,8 @@ function App() {
           onChange={handleDemensions}
         />
 
-        <select onChange={handleWeldTypes}>
-          {weld.map((m) => (
-            <option key={m.id} value={m.id}>{m.name}</option>
-          ))}
-        </select>
+        <Select handle={handleWeldTypes} data={weld}/>
+
       </form>
 
       <div className='panel'>
@@ -205,8 +105,6 @@ function App() {
           <p>Стоимость 1м сварного шва: {priceWeld.toFixed(0)} руб</p>
           <p>Итоговый чек: {itog.toFixed(0)} руб</p>
         </div>
-
-
       </div>
     </div>
 
